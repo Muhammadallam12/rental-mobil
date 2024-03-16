@@ -22,7 +22,7 @@ class RentalController extends Controller
             }
         })->paginate(10);
 
-        return view('rental.index', compact('rental$rental'));
+        return view('rental.index', compact('rental'));
     }
 
     public function getCompletedRentals()
