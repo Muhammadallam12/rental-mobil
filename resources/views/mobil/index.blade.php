@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-   Mobil
+    Mobil
 @endsection
 
 @section('content')
@@ -18,13 +18,15 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
                                 </div>
-                                <input type="search" placeholder="Pencarian" name="search" class="form-control" aria-label="Search" aria-describedby="basic-addon1" value="{{ request('search') }}">
+                                <input type="search" placeholder="Pencarian" name="search" class="form-control"
+                                    aria-label="Search" aria-describedby="basic-addon1" value="{{ request('search') }}">
                             </div>
                         </form>
-                            <a href="{{ route('mobil.create') }}" class="btn btn-primary mb-2 mr-3"><i class="fa fa-pencil-alt"></i> Tambah</a>
+                        <a href="{{ route('mobil.create') }}" class="btn btn-primary mb-2 mr-3"><i
+                                class="fa fa-pencil-alt"></i> Tambah</a>
                     </div>
                 </div>
-                @if(session()->has('message'))
+                @if (session()->has('message'))
                     <div class="alert alert-success">
                         {{ session()->get('message') }}
                     </div>
@@ -40,19 +42,22 @@
                             <th>Action</th>
                         </tr>
                         @forelse ($mobil as $mobil)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $mobil->merek }}</td>
-                            <td>{{ $mobil->model }}</td>
-                            <td>{{ $mobil->nomor_plat }}</td>
-                            <td>{{ $mobil->tarif_sewa }}</td>
-                            <td>
-                                <div class="d-flex flex-row">
-                                    <a href="{{ route('mobil.edit', ['mobil' => $mobil->id]) }}" class="btn btn-info mr-3"><i class="fa fa-edit"></i></a>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-mobil-id="{{ $mobil->id }}"><i class="fa fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $mobil->merek }}</td>
+                                <td>{{ $mobil->model }}</td>
+                                <td>{{ $mobil->nomor_plat }}</td>
+                                <td>{{ $mobil->tarif_sewa }}</td>
+                                <td>
+                                    <div class="d-flex flex-row">
+                                        <a href="{{ route('mobil.edit', ['mobil' => $mobil->id]) }}"
+                                            class="btn btn-info mr-3"><i class="fa fa-edit"></i></a>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal"
+                                            data-target="#deleteModal" data-mobil-id="{{ $mobil->id }}"><i
+                                                class="fa fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
                         @empty
                             <td colspan="10" class="text-center">Data tidak ada</td>
                         @endforelse
@@ -63,7 +68,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -87,21 +93,21 @@
         </div>
     </div>
 
-    {{-- @push('page_js')
+    @push('page_js')
         <script>
-            $(document).ready(function () {
-            $('.btn-danger').on('click', function () {
-                var mobilId = $(this).data('mobil-id');
-                $('#deleteModal').data('mobil-id', mobilId);
-            });
+            $(document).ready(function() {
+                $('.btn-danger').on('click', function() {
+                    var mobilId = $(this).data('mobil-id');
+                    $('#deleteModal').data('mobil-id', mobilId);
+                });
 
-            $('#deleteModal').on('show.bs.modal', function () {
-                var mobilId = $(this).data('mobil-id');
-                var deleteUrl = "{{ route('mobil.delete', ['mobil' => 'id']) }}";
-                deleteUrl = deleteUrl.replace('id', mobilId);
-                $('#deleteForm').attr('action', deleteUrl);
+                $('#deleteModal').on('show.bs.modal', function() {
+                    var mobilId = $(this).data('mobil-id');
+                    var deleteUrl = "{{ route('mobil.destroy', ['mobil' => 'id']) }}";
+                    deleteUrl = deleteUrl.replace('id', mobilId);
+                    $('#deleteForm').attr('action', deleteUrl);
+                });
             });
-        });
         </script>
-    @endpush --}}  
+    @endpush
 @endsection
