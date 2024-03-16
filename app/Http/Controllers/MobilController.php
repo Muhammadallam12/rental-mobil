@@ -91,7 +91,7 @@ class MobilController extends Controller
 
     public function edit(string $id)
     {
-        $mobil = Mobil::where('id_mobil', $id)->first();
+        $mobil = Mobil::where('id', $id)->first();
 
         return view('mobil.edit', compact('mobil'));
     }

@@ -24,12 +24,6 @@ class RentalController extends Controller
         return view('rental.index', compact('mobil'));
     }
 
-    // public function getAllRentals()
-    // {
-    //     $rentals = Rental::all();
-    //     return view('rental.index', ['rentals' => $rentals]);
-    // }
-
     public function getCompletedRentals()
     {
         $completedRentals = Rental::where('status', 'selesai')->get();
@@ -51,6 +45,11 @@ class RentalController extends Controller
             return redirect()->route('rental.index')->with('error', 'Rental not found');
         }
         return view('rental.show', ['rental' => $rental]);
+    }
+
+    public function create()
+    {
+        return view('rental.create');
     }
 
     public function createRental(Request $request)
@@ -81,6 +80,7 @@ class RentalController extends Controller
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai,
             'status' => 'dipinjam', // Set status awal ke 'dipinjam'
+            'total_harga' => $request->total_harga,
         ]);
 
         return redirect()->route('rental.create')->with('success', 'Rental berhasil dibuat');

@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-10">
             <h5>Edit Mobil</h5>
-            <form action="{{ route('mobil.update', ['mobil' => $mobil->id_]) }}" id="custom_form" class="mt-5" enctype="multipart/form-data">
+            <form action="{{ route('mobil.update', ['mobil' => $mobil->id]) }}" id="custom_form" class="mt-5" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
                 <div class="row">
