@@ -39,7 +39,12 @@ class MobilController extends Controller
         return view('mobil.detail', ['mobil' => $mobil]);
     }
 
-    public function createMobil(Request $request)
+    public function create()
+    {
+        return view('mobil.create');
+    }
+
+    public function store(Request $request)
     {
         $request->validate([
             'merek' => 'required',

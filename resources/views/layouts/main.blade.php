@@ -29,7 +29,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ auth()->user()->role == "admin" ? route('admin.index') : '#' }}">
+            {{-- <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ auth()->user()->role == "admin" ? route('admin.index') : '#' }}"> --}}
                 <div class="d-flex flex-row">
                     Admin MENU
                 </div>
@@ -40,7 +40,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item {{ request()->path() == 'dashboard-admin' ? 'active' : '' }}">
-                <a class="nav-link" href="{{route('admin.index')}}">
+                {{-- <a class="nav-link" href="{{route('admin.index')}}"> --}}
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -56,7 +56,7 @@
             <!-- Nav Item - Pages Collapse Menu -->
 
             <li class="nav-item {{ request()->path() == 'rekening' ? 'active' : '' }}">
-                <a class="nav-link" href="{{route('rekening.index')}}">
+                {{-- <a class="nav-link" href="{{route('rekening.index')}}"> --}}
                     <i class="bi bi-table"></i>
                     <span>Rekening</span>
                 </a>
