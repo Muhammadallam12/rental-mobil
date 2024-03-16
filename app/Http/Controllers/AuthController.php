@@ -30,19 +30,19 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
+            'name' => 'required',
             'alamat' => 'required',
-            'nomor_telepon' => 'required|unique:users',
-            'nomor_SIM' => 'required|unique:users',
+            'no_telp' => 'required|unique:users',
+            'no_sim' => 'required|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:4|regex:/[0-9]/', // Minimal 4 karakter termasuk angka
         ]);
 
         $user = User::create([
-            'nama' => $request->nama,
+            'name' => $request->nama,
             'alamat' => $request->alamat,
-            'nomor_telepon' => $request->nomor_telepon,
-            'nomor_SIM' => $request->nomor_SIM,
+            'no_telp' => $request->no_telp,
+            'no_sim' => $request->no_sim,
             'email' => $request->email,
             'password' => bcrypt($request->password), // Enkripsi password sebelum disimpan
             'role' => 'user',
