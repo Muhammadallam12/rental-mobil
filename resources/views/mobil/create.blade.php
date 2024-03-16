@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-10">
             <h5>Tambah Mobil</h5>
-            <form action="{{ route('mobil.create') }}" method="post" class="mt-5" id="custom_form" enctype="multipart/form-data">
+            <form action="{{ route('mobil.store') }}" method="post" class="mt-5" id="custom_form" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     {{-- <div class="col-6">

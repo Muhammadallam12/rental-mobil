@@ -84,9 +84,19 @@ class MobilController extends Controller
         }
     }
 
+    public function show(string $id)
+    {
+        //
+    }
 
+    public function edit(string $id)
+    {
+        $mobil = Mobil::where('id_mobil', $id)->first();
 
-    public function updateMobil(Request $request, $id)
+        return view('mobil.edit', compact('mobil'));
+    }
+
+    public function update(Request $request, $id)
     {
         $request->validate([
             'merek' => 'required',
@@ -98,29 +108,83 @@ class MobilController extends Controller
         $mobil = Mobil::find($id);
 
         if (!$mobil) {
-            return response()->view('errors.404', [], 404);
+            return response()->json([
+                'success' => false,
+                'data' => null,
+                'message' => 'Mobil tidak ditemukan',
+            ], 404);
         }
 
-        $mobil->update([
-            'merek' => $request->merek,
-            'model' => $request->model,
-            'nomor_plat' => $request->nomor_plat,
-            'tarif_sewa' => $request->tarif_sewa,
-        ]);
+        try {
+            $mobil->update([
+                'merek' => $request->merek,
+                'model' => $request->model,
+                'nomor_plat' => $request->nomor_plat,
+                'tarif_sewa' => $request->tarif_sewa,
+            ]);
 
-        return redirect()->route('mobil.detail', ['id' => $id])->with('success', 'Data mobil berhasil diperbarui');
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'data' => null,
+                    'message' => 'Data mobil berhasil diperbarui',
+                    'redirect' => route('mobil.detail', ['id' => $id]),
+                ], 200);
+            } else {
+                return redirect()->route('mobil.detail', ['id' => $id])->with('success', 'Data mobil berhasil diperbarui');
+            }
+        } catch (\Exception $e) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'data' => null,
+                    'message' => 'Gagal memperbarui data mobil: ' . $e->getMessage(),
+                ], 500);
+            } else {
+                return redirect()->back()->withInput()->with('error', 'Gagal memperbarui data mobil: ' . $e->getMessage());
+            }
+        }
     }
 
-    public function deleteMobil($id)
+
+    public function destroy($id)
     {
         $mobil = Mobil::find($id);
 
         if (!$mobil) {
-            return response()->view('errors.404', [], 404);
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'data' => null,
+                    'message' => 'Mobil tidak ditemukan',
+                ], 404);
+            } else {
+                return response()->view('errors.404', [], 404);
+            }
         }
 
-        $mobil->delete();
+        try {
+            $mobil->delete();
 
-        return redirect()->route('mobil.index')->with('success', 'Data mobil berhasil dihapus');
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'data' => null,
+                    'message' => 'Data mobil berhasil dihapus',
+                ], 200);
+            } else {
+                return redirect()->route('mobil.index')->with('success', 'Data mobil berhasil dihapus');
+            }
+        } catch (\Exception $e) {
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'data' => null,
+                    'message' => 'Gagal menghapus data mobil: ' . $e->getMessage(),
+                ], 500);
+            } else {
+                return redirect()->route('mobil.index')->with('error', 'Gagal menghapus data mobil: ' . $e->getMessage());
+            }
+        }
     }
 }
