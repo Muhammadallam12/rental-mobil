@@ -47,12 +47,6 @@ class RentalController extends Controller
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
         ]);
 
-        // Cek stok mobil
-        $mobil = Mobil::find($request->id_mobil);
-        if (!$mobil || $mobil->stok == 0) {
-            return redirect()->back()->withInput()->with('error', 'Mobil tidak tersedia untuk disewa');
-        }
-
         // Cek ketersediaan mobil pada rentang tanggal penyewaan
         $existingRental = Rental::where('id_mobil', $request->id_mobil)
             ->where(function ($query) use ($request) {
@@ -73,12 +67,6 @@ class RentalController extends Controller
             'tanggal_selesai' => $request->tanggal_selesai,
             'status' => 'dipinjam', // Set status awal ke 'dipinjam'
         ]);
-
-        // Kurangi stok mobil
-        $mobil->stok--;
-
-        // Simpan perubahan
-        $mobil->save();
 
         return redirect()->route('rental.create')->with('success', 'Rental berhasil dibuat');
     }
@@ -127,11 +115,6 @@ class RentalController extends Controller
             return redirect()->route('rental.index')->with('error', 'Rental not found');
         }
 
-        // Kembalikan stok mobil saat rental dihapus
-        $mobil = $rental->mobil;
-        $mobil->stok++;
-        $mobil->save();
-
         // Hapus rental
         $rental->delete();
 
@@ -165,11 +148,6 @@ class RentalController extends Controller
         // Ubah status rental menjadi 'selesai'
         $rental->status = 'selesai';
         $rental->save();
-
-        // Kembalikan stok mobil
-        $mobil = Mobil::where('nomor_plat', $nomor_plat)->first();
-        $mobil->stok++;
-        $mobil->save();
 
         return redirect()->back()->with('success', 'Mobil dengan nomor plat ' . $nomor_plat . ' telah berhasil dikembalikan. Total biaya sewa: Rp ' . $total_biaya);
     }

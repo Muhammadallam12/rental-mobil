@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Mobil extends Model
 {
     use HasFactory;
-    protected $fillable = ['merek', 'model', 'nomor_plat', 'tarif_sewa', 'stok'];
+    protected $fillable = ['merek', 'model', 'nomor_plat', 'tarif_sewa'];
 }
