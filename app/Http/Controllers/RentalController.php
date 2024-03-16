@@ -14,15 +14,15 @@ class RentalController extends Controller
     {
         $search = $request->input('search');
 
-        $mobil = Rental::where(function ($query) use ($search) {
+        $rental = Rental::where(function ($query) use ($search) {
             if ($search) {
                 $query->where('status', 'like', '%' . $search . '%')
                     ->orWhere('tanggal_mulai', 'like', '%' . $search . '%');
-                // ->orWhere('sub_mobil', 'like', '%' . $search . '%');
+                // ->orWhere('sub_rental$rental', 'like', '%' . $search . '%');
             }
         })->paginate(10);
 
-        return view('rental.index', compact('mobil'));
+        return view('rental.index', compact('rental$rental'));
     }
 
     public function getCompletedRentals()
