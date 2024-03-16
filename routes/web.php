@@ -35,7 +35,7 @@ Route::get('/users/role/user', [AuthController::class, 'getRoleUser'])->name('us
 
 // Rute untuk Mobil
 Route::resource('mobil', MobilController::class);
-Route::get('/dashboard', AdminController::class);
+// Route::get('/dashboard', AdminController::class);
 
 // Rute untuk Rental
 Route::resource('rental', RentalController::class);

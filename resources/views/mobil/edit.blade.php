@@ -11,19 +11,19 @@
             <form action="{{ route('mobil.update', ['mobil' => $mobil->id]) }}" id="custom_form" class="mt-5" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="jenis_rekening">Jenis Rekening</label>
                             <input type="number" name="jenis_rekening" id="jenis_rekening" value="{{ old('jenis_rekening') }}" class="form-control">
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="merek">Merek</label>
-                            <input type="text" name="merek" id="merek" value="{{ old('merek') }}" class="form-control">
+                            <input type="text" name="merek" id="merek" value="{{$mobil->merek}}" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="model">Model</label>
-                            <input type="text" name="model" id="model" value="{{ old('model') }}" class="form-control">
+                            <input type="text" name="model" id="model" value="{{$mobil->model}}" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="nomor_plat">Nomor Plat</label>
-                            <input type="text" name="nomor_plat" id="nomor_plat" value="{{ old('nomor_plat') }}" class="form-control">
+                            <input type="text" name="nomor_plat" id="nomor_plat" value="{{$mobil->nomor_plat}}" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -47,15 +47,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="tarif_sewa">Tarif Sewa</label>
-                            <input type="number" name="tarif_sewa" id="tarif_sewa" value="{{ old('tarif_sewa') }}" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="stok">Stok</label>
-                            <input type="number" name="stok" id="stok" value="{{ old('stok') }}" class="form-control">
+                            <input type="number" name="tarif_sewa" id="tarif_sewa" value="{{$mobil->tarif_sewa}}" class="form-control">
                         </div>
                     </div>
                 </div>
