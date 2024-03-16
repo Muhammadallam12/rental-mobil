@@ -36,21 +36,11 @@
                         </span>
                     </div>
                 </div>
-                {{-- @error('password')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror --}}
-                {{-- <div class="mt-2">
-                    <a href="#" class="text-small">Forgot Password?</a>
-                </div> --}}
             </div>
 
             <div class="d-flex justify-content-center mt-3">
                 <button type="submit" id="btn_submit" class="btn btn-primary w-50">Login</button>
             </div>
-
-            {{-- <div class="mt-3 text-center">
-                <span>Don't have an account? <a href="{{ route('register.index') }}" class="text-small">Register</a></span>
-            </div> --}}
         </form>
     </div>
 @endsection
