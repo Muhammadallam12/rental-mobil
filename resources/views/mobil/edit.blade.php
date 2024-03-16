@@ -11,14 +11,6 @@
             <form action="{{ route('mobil.update', ['mobil' => $mobil->id]) }}" id="custom_form" class="mt-5" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
-                {{-- <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="jenis_rekening">Jenis Rekening</label>
-                            <input type="number" name="jenis_rekening" id="jenis_rekening" value="{{ old('jenis_rekening') }}" class="form-control">
-                        </div>
-                    </div>
-                </div> --}}
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">

@@ -50,7 +50,8 @@ class RentalController extends Controller
 
     public function create()
     {
-        return view('rental.create');
+        $mobil = Mobil::get();
+        return view('rental.create', compact('mobil'));
     }
 
     public function store(Request $request)
@@ -59,6 +60,7 @@ class RentalController extends Controller
             'id_mobil' => 'required|exists:mobils,id',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'total_harga' => 'required'
         ]);
 
         $id_pengguna = Auth::id(); // Mendapatkan ID pengguna yang sedang login

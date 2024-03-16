@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Target
+    Rental
 @endsection
 
 @section('content')
@@ -10,10 +10,10 @@
             <div class="card-body">
                 <div class="d-flex flex-row justify-content-between">
                     <div class="">
-                        <h5 class="m-0 font-weight-bold">Tabel Target</h5>
+                        <h5 class="m-0 font-weight-bold">Tabel Rental</h5>
                     </div>
                     <div class="d-flex flex-row">
-                        <form action="{{ route('target.index') }}" method="get" class="mr-3">
+                        <form action="{{ route('rental.index') }}" method="get" class="mr-3">
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
@@ -23,9 +23,8 @@
                             </div>
                         </form>
                         <div class="d-flex flex-row">
-                            <a href="{{ route('target.create') }}" class="btn btn-primary mb-2"><i
+                            <a href="{{ route('rental.create') }}" class="btn btn-primary mb-2"><i
                                     class="fa fa-pencil-alt"></i> Tambah</a>
-                            <a href="{{ route('export.target') }}" class="btn btn-primary mb-2 ml-3"> Export</a>
                         </div>
                     </div>
                 </div>
@@ -38,27 +37,29 @@
                     <table class="table table-bordered table-hover">
                         <tr>
                             <th>No</th>
-                            <th>Jenis Rekening</th>
-                            <th>Sub Rekening</th>
-                            <th>Nama Rekening</th>
-                            <th>Tahun Angaran</th>
-                            <th>Target(RP)</th>
+                            <th>Merek</th>
+                            <th>Model</th>
+                            <th>Nomor Plat</th>
+                            <th>Tanggal Sewa</th>
+                            <th>Tanggal Pengembalian</th>
+                            <th>Total Sewa</th>
                             <th>Action</th>
                         </tr>
-                        @forelse ($targets as $target)
+                        @forelse ($rental as $rental)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $target->jenis_rekening }}</td>
-                                <td>{{ $target->sub_rekening }}</td>
-                                <td>{{ $target->nama_rekening }}</td>
-                                <td>{{ $target->tahun }}</td>
-                                <td>{{ $target->jumlah_target }}</td>
+                                <td>{{ $rental->merek }}</td>
+                                <td>{{ $rental->model }}</td>
+                                <td>{{ $rental->no_plat }}</td>
+                                <td>{{ $rental->tanggal_mulai }}</td>
+                                <td>{{ $rental->tanggal_selesai }}</td>
+                                <td>{{ $rental->total_sewa }}</td>
                                 <td>
                                     <div class="d-flex flex-row">
-                                        <a href="{{ route('target.edit', ['target' => $target->id_target]) }}"
+                                        <a href="{{ route('rental.edit', ['rental' => $rental->id]) }}"
                                             class="btn btn-info mr-3"><i class="fa fa-edit"></i></a>
                                         <button type="button" class="btn btn-danger" data-toggle="modal"
-                                            data-target="#deleteModal" data-target-id="{{ $target->id_target }}"><i
+                                            data-rental="#deleteModal" data-rental-id="{{ $rental->id }}"><i
                                                 class="fa fa-trash"></i></button>
                                     </div>
                                 </td>
@@ -67,7 +68,7 @@
                             <td colspan="10" class="text-center">Data tidak ada</td>
                         @endforelse
                     </table>
-                    {{ $targets->links() }}
+                    {{ $rental->links() }}
                 </div>
             </div>
         </div>
@@ -84,7 +85,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete this target?</p>
+                    <p>Are you sure you want to delete this rental?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -102,14 +103,14 @@
         <script>
             $(document).ready(function() {
                 $('.btn-danger').on('click', function() {
-                    var targetId = $(this).data('target-id');
-                    $('#deleteModal').data('target-id', targetId);
+                    var rentalId = $(this).data('rental-id');
+                    $('#deleteModal').data('rental-id', rentalId);
                 });
 
                 $('#deleteModal').on('show.bs.modal', function() {
-                    var targetId = $(this).data('target-id');
-                    var deleteUrl = "{{ route('target.destroy', ['target' => 'id']) }}";
-                    deleteUrl = deleteUrl.replace('id', targetId);
+                    var rentalId = $(this).data('rental-id');
+                    var deleteUrl = "{{ route('rental.destroy', ['rental' => 'id']) }}";
+                    deleteUrl = deleteUrl.replace('id', rentalId);
                     $('#deleteForm').attr('action', deleteUrl);
                 });
             });
