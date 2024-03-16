@@ -128,10 +128,10 @@ class MobilController extends Controller
                     'success' => true,
                     'data' => null,
                     'message' => 'Data mobil berhasil diperbarui',
-                    'redirect' => route('mobil.detail', ['id' => $id]),
+                    'redirect' => route('mobil.index', ['id' => $id]),
                 ], 200);
             } else {
-                return redirect()->route('mobil.detail', ['id' => $id])->with('success', 'Data mobil berhasil diperbarui');
+                return redirect()->route('mobil.error', ['id' => $id])->with('success', 'Data mobil berhasil diperbarui');
             }
         } catch (\Exception $e) {
             if ($request->ajax()) {
