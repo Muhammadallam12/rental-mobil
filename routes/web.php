@@ -22,20 +22,23 @@ Route::get('/', function () {
 });
 
 // Rute untuk menampilkan halaman login
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+// Route::get('/login', function () {
+//     return view('login');
+// })->name('login');
 
 //auth
-Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/', [AuthController::class, 'loginIndex'])->name('login.index');
+Route::post('/login', [AuthController::class, 'login'])->name('login.store');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
+
+Route::middleware(['auth'])->group(function () {
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/users', [AuthController::class, 'getAll'])->name('users.all');
 Route::get('/users/role/user', [AuthController::class, 'getRoleUser'])->name('users.role.user');
 
 //admin
-Route::get('/dashboard-admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('/dashboard-admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
 // Rute untuk Mobil
 Route::resource('mobil', MobilController::class);
@@ -46,3 +49,4 @@ Route::resource('rental', RentalController::class);
 Route::post('/return-car', [RentalController::class, 'returnCar'])->name('return.car');
 Route::get('/completed-rentals', [RentalController::class, 'getCompletedRentals'])->name('completed.rentals');
 Route::get('/ongoing-rentals', [RentalController::class, 'getOngoingRentals'])->name('ongoing.rentals');
+});

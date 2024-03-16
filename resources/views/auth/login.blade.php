@@ -7,7 +7,7 @@
 @section('content')
     <div style="margin: 100px 130px 50px 130px;">
         <div class="d-flex justify-content-center align-items-center">
-            <img class="" src="{{asset('assets/img/logo.jpg')}}" alt="Logo" style="width:150px; height:auto;">
+            <img class="" src="{{asset('assets/img/cat-logo.png')}}" alt="Logo" style="width:150px; height:auto;">
         </div>
         <h2 class="font-weight-bold mt-3">Selamat Datang</h2>
         <p class="mt-2">Silahkan login</p>
@@ -16,7 +16,7 @@
             {{ session()->get('error') }}
         </div>
         @endif --}}
-        <form action="{{ route('login.index') }}" class="d-flex flex-column justify-content-center" id="custom_form" method="POST">
+        <form action="{{ route('login.store') }}" class="d-flex flex-column justify-content-center" id="custom_form" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
@@ -36,11 +36,21 @@
                         </span>
                     </div>
                 </div>
+                {{-- @error('password')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror --}}
+                {{-- <div class="mt-2">
+                    <a href="#" class="text-small">Forgot Password?</a>
+                </div> --}}
             </div>
 
             <div class="d-flex justify-content-center mt-3">
                 <button type="submit" id="btn_submit" class="btn btn-primary w-50">Login</button>
             </div>
+
+            {{-- <div class="mt-3 text-center">
+                <span>Don't have an account? <a href="{{ route('register.index') }}" class="text-small">Register</a></span>
+            </div> --}}
         </form>
     </div>
 @endsection
