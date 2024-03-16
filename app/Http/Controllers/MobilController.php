@@ -14,7 +14,7 @@ class MobilController extends Controller
         $mobil = Mobil::where(function ($query) use ($search) {
             if ($search) {
                 $query->where('merek', 'like', '%' . $search . '%')
-                ->orWhere('model', 'like', '%' . $search . '%');
+                    ->orWhere('model', 'like', '%' . $search . '%');
                 // ->orWhere('sub_mobil', 'like', '%' . $search . '%');
             }
         })->paginate(10);
@@ -61,11 +61,29 @@ class MobilController extends Controller
                 'tarif_sewa' => $request->tarif_sewa,
             ]);
 
-            return redirect()->route('mobil.index')->with('success', 'Mobil berhasil dibuat');
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'data' => null,
+                    'message' => 'Mobil berhasil dibuat',
+                    'redirect' => route('mobil.index'),
+                ], 200);
+            } else {
+                return redirect()->route('mobil.index')->with('success', 'Mobil berhasil dibuat');
+            }
         } catch (\Exception $e) {
-            return redirect()->back()->withInput()->with('error', 'Gagal membuat mobil: ' . $e->getMessage());
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'data' => null,
+                    'message' => 'Gagal membuat mobil: ' . $e->getMessage(),
+                ], 200);
+            } else {
+                return redirect()->back()->withInput()->with('error', 'Gagal membuat mobil: ' . $e->getMessage());
+            }
         }
     }
+
 
 
     public function updateMobil(Request $request, $id)
