@@ -6,6 +6,7 @@ use App\Models\Mobil;
 use App\Models\Rental;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RentalController extends Controller
 {
@@ -16,7 +17,7 @@ class RentalController extends Controller
         $mobil = Rental::where(function ($query) use ($search) {
             if ($search) {
                 $query->where('status', 'like', '%' . $search . '%')
-                ->orWhere('tanggal_mulai', 'like', '%' . $search . '%');
+                    ->orWhere('tanggal_mulai', 'like', '%' . $search . '%');
                 // ->orWhere('sub_mobil', 'like', '%' . $search . '%');
             }
         })->paginate(10);
@@ -52,14 +53,15 @@ class RentalController extends Controller
         return view('rental.create');
     }
 
-    public function createRental(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
-            'id_pengguna' => 'required|exists:users,id',
             'id_mobil' => 'required|exists:mobils,id',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
         ]);
+
+        $id_pengguna = Auth::id(); // Mendapatkan ID pengguna yang sedang login
 
         // Cek ketersediaan mobil pada rentang tanggal penyewaan
         $existingRental = Rental::where('id_mobil', $request->id_mobil)
@@ -70,12 +72,20 @@ class RentalController extends Controller
             ->first();
 
         if ($existingRental) {
-            return redirect()->back()->withInput()->with('error', 'Mobil tidak tersedia pada rentang tanggal yang dipilih');
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'data' => null,
+                    'message' => 'Mobil tidak tersedia pada rentang tanggal yang dipilih',
+                ], 422);
+            } else {
+                return redirect()->back()->withInput()->with('error', 'Mobil tidak tersedia pada rentang tanggal yang dipilih');
+            }
         }
 
         // Buat entri rental
         $rental = Rental::create([
-            'id_pengguna' => $request->id_pengguna,
+            'id_pengguna' => $id_pengguna, // Menggunakan ID pengguna yang sedang login
             'id_mobil' => $request->id_mobil,
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai,
@@ -83,10 +93,31 @@ class RentalController extends Controller
             'total_harga' => $request->total_harga,
         ]);
 
-        return redirect()->route('rental.create')->with('success', 'Rental berhasil dibuat');
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'data' => null,
+                'message' => 'Rental berhasil dibuat',
+            ], 200);
+        } else {
+            return redirect()->route('rental.create')->with('success', 'Rental berhasil dibuat');
+        }
     }
 
-    public function updateRental(Request $request, $id)
+
+    public function show(string $id)
+    {
+        //
+    }
+
+    public function edit(string $id)
+    {
+        $rental = Rental::where('id', $id)->first();
+
+        return view('rental.edit', compact('rental'));
+    }
+
+    public function update(Request $request, $id)
     {
         $request->validate([
             'id_pengguna' => 'required|exists:users,id',
@@ -97,7 +128,15 @@ class RentalController extends Controller
 
         $rental = Rental::find($id);
         if (!$rental) {
-            return redirect()->route('rental.index')->with('error', 'Rental not found');
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'data' => null,
+                    'message' => 'Rental tidak ditemukan',
+                ], 404);
+            } else {
+                return redirect()->route('rental.index')->with('error', 'Rental not found');
+            }
         }
 
         // Cek ketersediaan mobil pada rentang tanggal penyewaan
@@ -110,7 +149,15 @@ class RentalController extends Controller
             ->first();
 
         if ($existingRental) {
-            return redirect()->back()->withInput()->with('error', 'Mobil tidak tersedia pada rentang tanggal yang dipilih');
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'data' => null,
+                    'message' => 'Mobil tidak tersedia pada rentang tanggal yang dipilih',
+                ], 422);
+            } else {
+                return redirect()->back()->withInput()->with('error', 'Mobil tidak tersedia pada rentang tanggal yang dipilih');
+            }
         }
 
         // Update data rental
@@ -118,9 +165,18 @@ class RentalController extends Controller
         $rental->id_mobil = $request->id_mobil;
         $rental->tanggal_mulai = $request->tanggal_mulai;
         $rental->tanggal_selesai = $request->tanggal_selesai;
+        $rental->total_harga = $request->total_harga;
         $rental->save();
 
-        return redirect()->route('rental.index')->with('success', 'Rental berhasil diperbarui');
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'data' => null,
+                'message' => 'Rental berhasil diperbarui',
+            ], 200);
+        } else {
+            return redirect()->route('rental.index')->with('success', 'Rental berhasil diperbarui');
+        }
     }
 
     public function deleteRental($id)

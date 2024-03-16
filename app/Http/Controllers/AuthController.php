@@ -51,8 +51,14 @@ class AuthController extends Controller
         return response()->json(['message' => 'Registrasi berhasil', 'user' => $user], 201);
     }
 
+    public function loginIndex()
+    {
+
+        return view('auth.login');
+    }
 
     //login
+
     public function login(Request $request)
     {
         $data = $request->validate([
@@ -65,24 +71,50 @@ class AuthController extends Controller
 
             if ($role === 'admin') {
                 $request->session()->regenerate();
-                return redirect()->route('welcome');
+                if ($request->ajax()) {
+                    return response()->json([
+                        'success' => true,
+                        'data' => null,
+                        'message' => 'Login successfully.',
+                        'redirect' => route('admin.dashboard'),
+                    ], 200);
+                } else {
+                    return redirect()->route('welcome');
+                }
             } elseif ($role === 'user') {
                 $request->session()->regenerate();
-                return redirect()->route('user');
+                if ($request->ajax()) {
+                    return response()->json([
+                        'success' => true,
+                        'data' => null,
+                        'message' => 'Login successfully.',
+                        'redirect' => route('user'),
+                    ], 200);
+                } else {
+                    return redirect()->route('user');
+                }
             }
         }
 
-        return back()->with('error', 'Email atau kata sandi yang anda masukkan salah');
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => false,
+                'data' => null,
+                'message' => 'Email or password is incorrect',
+            ], 422);
+        } else {
+            return back()->with('error', 'Email atau kata sandi yang anda masukkan salah');
+        }
     }
 
-    public function logout(Request $request)
-    {
+
+    public function logout() {
+
         Auth::logout();
+        session()->forget('link');
+        session()->flush();
 
-        $request->session()->invalidate();
+        return redirect()->route('login.index');
 
-        $request->session()->regenerateToken();
-
-        return redirect('/login');
     }
 }

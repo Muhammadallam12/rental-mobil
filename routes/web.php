@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\RentalController;
@@ -33,9 +34,11 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/users', [AuthController::class, 'getAll'])->name('users.all');
 Route::get('/users/role/user', [AuthController::class, 'getRoleUser'])->name('users.role.user');
 
+//admin
+Route::get('/dashboard-admin', [AdminController::class, 'index'])->name('admin.index');
+
 // Rute untuk Mobil
 Route::resource('mobil', MobilController::class);
-// Route::get('/dashboard', AdminController::class);
 
 // Rute untuk Rental
 Route::resource('rental', RentalController::class);
