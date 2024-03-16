@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('tanggal_selesai');
             $table->timestamps();
             $table->enum('status',['dipinjam','selesai']);
+            $table->integer('total_harga');
 
             $table->foreign('id_pengguna')->references('id')->on('users');
             $table->foreign('id_mobil')->references('id')->on('mobils');

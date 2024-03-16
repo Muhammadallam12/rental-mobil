@@ -33,19 +33,11 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/users', [AuthController::class, 'getAll'])->name('users.all');
 Route::get('/users/role/user', [AuthController::class, 'getRoleUser'])->name('users.role.user');
 
-//mobil
-Route::get('/get-mobil', [MobilController::class, 'getAllMobil'])->name('mobil.index');
-Route::get('/mobil/{id}', [MobilController::class, 'getMobilById'])->name('mobil.detail');
-Route::post('/create-mobil', [MobilController::class, 'createMobil'])->name('mobil.create');
-Route::patch('/update-mobil/{id}', [MobilController::class, 'updateMobil'])->name('mobil.update');
-Route::delete('/delete-mobil/{id}', [MobilController::class, 'deleteMobil'])->name('mobil.delete');
+// Rute untuk Mobil
+Route::resource('mobil', MobilController::class);
 
-//rental
-Route::get('/get-rentals', [RentalController::class, 'getAllRentals'])->name('rental.index');
-Route::get('/rentals/{id}', [RentalController::class, 'getRentalById'])->name('rental.detail');
-Route::post('/create-rentals', [RentalController::class, 'createRental'])->name('rental.create');
-Route::put('/update-rentals/{id}', [RentalController::class, 'updateRental'])->name('rental.update');
-Route::delete('/delete-rentals/{id}', [RentalController::class, 'deleteRental'])->name('rental.delete');
+// Rute untuk Rental
+Route::resource('rental', RentalController::class);
 
 Route::post('/return-car', [RentalController::class, 'returnCar'])->name('return.car');
 Route::get('/completed-rentals', [RentalController::class, 'getCompletedRentals'])->name('completed.rentals');

@@ -9,11 +9,26 @@ use Illuminate\Http\Request;
 
 class RentalController extends Controller
 {
-    public function getAllRentals()
+    public function index(Request $request)
     {
-        $rentals = Rental::all();
-        return view('rental.index', ['rentals' => $rentals]);
+        $search = $request->input('search');
+
+        $mobil = Rental::where(function ($query) use ($search) {
+            if ($search) {
+                $query->where('status', 'like', '%' . $search . '%')
+                ->orWhere('tanggal_mulai', 'like', '%' . $search . '%');
+                // ->orWhere('sub_mobil', 'like', '%' . $search . '%');
+            }
+        })->paginate(10);
+
+        return view('rental.index', compact('mobil'));
     }
+
+    // public function getAllRentals()
+    // {
+    //     $rentals = Rental::all();
+    //     return view('rental.index', ['rentals' => $rentals]);
+    // }
 
     public function getCompletedRentals()
     {

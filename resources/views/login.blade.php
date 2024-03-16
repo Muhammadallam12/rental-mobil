@@ -16,7 +16,7 @@
             {{ session()->get('error') }}
         </div>
         @endif --}}
-        <form action="{{ route('login') }}" class="d-flex flex-column justify-content-center" id="custom_form" method="POST">
+        <form action="{{ route('login.submit') }}" class="d-flex flex-column justify-content-center" id="custom_form" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>

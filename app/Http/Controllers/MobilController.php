@@ -7,12 +7,26 @@ use Illuminate\Http\Request;
 
 class MobilController extends Controller
 {
-    public function getAllMobil()
+    public function index(Request $request)
     {
-        $mobil = Mobil::all();
+        $search = $request->input('search');
 
-        return view('mobil.index', ['mobil' => $mobil]);
+        $mobil = Mobil::where(function ($query) use ($search) {
+            if ($search) {
+                $query->where('merek', 'like', '%' . $search . '%')
+                ->orWhere('model', 'like', '%' . $search . '%');
+                // ->orWhere('sub_mobil', 'like', '%' . $search . '%');
+            }
+        })->paginate(10);
+
+        return view('mobil.index', compact('mobil'));
     }
+    // public function getAllMobil()
+    // {
+    //     $mobil = Mobil::all();
+
+    //     return view('mobil.index', ['mobil' => $mobil]);
+    // }
 
     public function getMobilById($id)
     {
