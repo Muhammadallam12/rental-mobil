@@ -54,7 +54,7 @@ class AuthController extends Controller
             'role' => 'user',
         ]);
 
-        return redirect()->route('user.index');
+        return redirect()->route('rental_user.index');
     }
 
 
