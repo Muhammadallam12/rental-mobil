@@ -21,6 +21,6 @@ class UserController extends Controller
         })->paginate(10);
 
 
-        return view('user.index', compact('rental'));
+        return view('rental_user.index', compact('rental'));
     }
 }

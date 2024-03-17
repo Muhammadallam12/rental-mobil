@@ -54,7 +54,7 @@ class AuthController extends Controller
             'role' => 'user',
         ]);
 
-        return redirect()->route('rental_user.index');
+        return redirect()->route('login.index');
     }
 
 
@@ -95,10 +95,10 @@ class AuthController extends Controller
                         'success' => true,
                         'data' => null,
                         'message' => 'Login successfully.',
-                        'redirect' => route('user'),
+                        'redirect' => route('user.index'),
                     ], 200);
                 } else {
-                    return redirect()->route('user');
+                    return redirect()->route('user.index');
                 }
             }
         }
