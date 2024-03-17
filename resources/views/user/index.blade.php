@@ -30,7 +30,7 @@
                     </div>
                 @endif
                 <div class="table-responsive mt-4">
-                    <table class="table table-bordered table-hover">
+                    {{-- <table class="table table-bordered table-hover">
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
@@ -51,7 +51,7 @@
                         @empty
                             <td colspan="10" class="text-center">Data tidak ada</td>
                         @endforelse
-                    </table>
+                    </table> --}}
                     {{-- {{ $user->links() }} --}}
                 </div>
             </div>

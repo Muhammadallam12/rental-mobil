@@ -74,7 +74,7 @@ class RentalController extends Controller
             ->first();
 
         if ($existingRental) {
-            if (request()->ajax()) {
+            if ($request->ajax()) {
                 return response()->json([
                     'success' => false,
                     'data' => null,
@@ -95,17 +95,16 @@ class RentalController extends Controller
             'total_harga' => $request->total_harga,
         ]);
 
-        if (request()->ajax()) {
+        if ($request->ajax()) {
             return response()->json([
                 'success' => true,
                 'data' => null,
                 'message' => 'Rental berhasil dibuat',
             ], 200);
         } else {
-            return redirect()->route('rental.create')->with('success', 'Rental berhasil dibuat');
+            return redirect()->route('rental.index')->with('success', 'Rental berhasil dibuat');
         }
     }
-
 
     public function show(string $id)
     {
@@ -114,9 +113,10 @@ class RentalController extends Controller
 
     public function edit(string $id)
     {
+        $mobil = Mobil::get();
         $rental = Rental::where('id', $id)->first();
 
-        return view('rental.edit', compact('rental'));
+        return view('rental.edit', compact('rental', 'mobil'));
     }
 
     public function update(Request $request, $id)
@@ -181,18 +181,33 @@ class RentalController extends Controller
         }
     }
 
-    public function deleteRental($id)
+    public function destroy($id)
     {
         $rental = Rental::find($id);
         if (!$rental) {
-            return redirect()->route('rental.index')->with('error', 'Rental not found');
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Rental not found',
+                ], 404);
+            } else {
+                return redirect()->route('rental.index')->with('error', 'Rental not found');
+            }
         }
 
         // Hapus rental
         $rental->delete();
 
-        return redirect()->route('rental.index')->with('success', 'Rental berhasil dihapus');
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Rental successfully deleted',
+            ], 200);
+        } else {
+            return redirect()->route('rental.index')->with('success', 'Rental successfully deleted');
+        }
     }
+
 
     //returnmobil
     public function returnCar(Request $request)

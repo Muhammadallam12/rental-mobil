@@ -16,7 +16,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="tanggal_mulai">Tanggal Sewa</label>
-                            <input type="date" name="tanggal_mulai" id="tanggal_mulai" value="{{ $mobil->tanggal_mulai }}" class="form-control" >
+                            <input type="date" name="tanggal_mulai" id="tanggal_mulai" value="{{ $rental->tanggal_mulai }}" class="form-control" >
                         </div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="tanggal_selesai">Tanggal Pengembalian</label>
-                            <input type="date" name="tanggal_selesai" id="tanggal_selesai" value="{{ $mobil->tanggal_selesai }}" class="form-control" >
+                            <input type="date" name="tanggal_selesai" id="tanggal_selesai" value="{{ $rental->tanggal_selesai }}" class="form-control" >
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="id">Merek</label>
-                            <select class="form-control" id="id" name="id">
+                            <select class="form-control" id="id_mobil" name="id_mobil">
                                 <option value="" disabled selected>Pilih Jenis Rekening</option>
                                 @foreach ($mobil as $mobil)
                                     <option value="{{ $mobil->id }}">{{ $mobil->merek }}</option>

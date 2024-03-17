@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\RentalController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,16 +30,18 @@ Route::get('/', function () {
 //auth
 Route::get('/', [AuthController::class, 'loginIndex'])->name('login.index');
 Route::post('/login', [AuthController::class, 'login'])->name('login.store');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/register-auth', [AuthController::class, 'store'])->name('register.store');
+Route::get('/register', [AuthController::class, 'index'])->name('register');
 
 
 Route::middleware(['auth'])->group(function () {
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/users', [AuthController::class, 'getAll'])->name('users.all');
 Route::get('/users/role/user', [AuthController::class, 'getRoleUser'])->name('users.role.user');
 
 //admin
 Route::get('/dashboard-admin', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::resource('user', UserController::class);
 
 // Rute untuk Mobil
 Route::resource('mobil', MobilController::class);

@@ -1,4 +1,4 @@
-@extends('layouts.main')
+{{-- @extends('layouts.main')
 
 @section('title')
     Create Target
@@ -9,7 +9,7 @@
         <div class="col-10">
             <h5></h5>
             <input type="text" class="" id="allMobil" value="{{$mobil}}" hidden>
-            <form action="{{ route('rental.create') }}" method="post" id="custom_form" class="mt-5" enctype="multipart/form-data">
+            <form action="{{ route('rental.store') }}" method="post" id="custom_form" class="mt-5" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-6">
@@ -31,7 +31,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="id">Merek</label>
-                            <select class="form-control" id="id" name="id">
+                            <select class="form-control" id="id_mobil" name="id_mobil">
                                 <option value="" disabled selected>Pilih Jenis Rekening</option>
                                 @foreach ($mobil as $mobil)
                                     <option value="{{ $mobil->id }}">{{ $mobil->merek }}</option>
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
@@ -210,4 +210,4 @@
             $("#btn_submit").prop("disabled", false);
         }
 </script>
-@endpush
+@endpush --}}

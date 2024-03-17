@@ -48,12 +48,12 @@
                         @forelse ($rental as $rental)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $rental->merek }}</td>
-                                <td>{{ $rental->model }}</td>
-                                <td>{{ $rental->no_plat }}</td>
+                                <td>{{ $rental->mobil->merek }}</td>
+                                <td>{{ $rental->mobil->model }}</td>
+                                <td>{{ $rental->mobil->nomor_plat }}</td>
                                 <td>{{ $rental->tanggal_mulai }}</td>
                                 <td>{{ $rental->tanggal_selesai }}</td>
-                                <td>{{ $rental->total_sewa }}</td>
+                                <td>{{ $rental->total_harga }}</td>
                                 <td>
                                     <div class="d-flex flex-row">
                                         <a href="{{ route('rental.edit', ['rental' => $rental->id]) }}"
@@ -68,7 +68,7 @@
                             <td colspan="10" class="text-center">Data tidak ada</td>
                         @endforelse
                     </table>
-                    {{ $rental->links() }}
+                    {{-- {{ $rental->links() }} --}}
                 </div>
             </div>
         </div>

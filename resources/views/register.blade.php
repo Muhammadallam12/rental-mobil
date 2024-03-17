@@ -7,12 +7,12 @@
 @section('content')
     <div style="margin: 30px 130px 0px 130px;">
         <h2 class="font-weight-bold text-center">Pendaftaran Akun Member</h2>
-        <form class="mt-5" action="{{ route("register") }}" method="post" enctype="multipart/form-data">
+        <form class="mt-5" action="{{ route("register.store") }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-lg-6 mb-1">
                     <label for="name" class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" style="border-width: 2px;">
+                    <input type="text" class="form-control" id="name" name="name" style="border-width: 2px;">
                     @error('name')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -42,7 +42,7 @@
                     @enderror
                 </div>
             </div>
-    
+
             <div class="row">
                 <div class="col-lg-6 mb-1">
                     <label for="password" class="form-label">Password</label>
@@ -66,9 +66,7 @@
                     @enderror
                 </div>
             </div>
-    
-           
-    
+
             <div class="d-flex justify-content-start mt-4">
                 <button type="submit" class="btn btn-primary w-50">Submit</button>
             </div>
@@ -112,7 +110,7 @@
             }
         });
     </script>
-    
+
     <script>
         $(document).ready(function(){
             $('#togglePassword').click(function(){
@@ -129,4 +127,4 @@
             });
         });
     </script>
-@endpush        
+@endpush

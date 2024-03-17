@@ -26,8 +26,13 @@ class AuthController extends Controller
         return $users;
     }
 
+    public function index(Request $request)
+    {
+        return view('register');
+    }
+
     // register
-    public function register(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -36,10 +41,11 @@ class AuthController extends Controller
             'no_sim' => 'required|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:4|regex:/[0-9]/', // Minimal 4 karakter termasuk angka
+            'role' => 'nullable'
         ]);
 
         $user = User::create([
-            'name' => $request->nama,
+            'name' => $request->name,
             'alamat' => $request->alamat,
             'no_telp' => $request->no_telp,
             'no_sim' => $request->no_sim,
@@ -48,8 +54,9 @@ class AuthController extends Controller
             'role' => 'user',
         ]);
 
-        return response()->json(['message' => 'Registrasi berhasil', 'user' => $user], 201);
+        return redirect()->route('user.index');
     }
+
 
     public function loginIndex()
     {
@@ -108,13 +115,13 @@ class AuthController extends Controller
     }
 
 
-    public function logout() {
+    public function logout()
+    {
 
         Auth::logout();
         session()->forget('link');
         session()->flush();
 
         return redirect()->route('login.index');
-
     }
 }

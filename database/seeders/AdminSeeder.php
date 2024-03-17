@@ -15,7 +15,7 @@ class AdminSeeder extends Seeder
     {
         User::create([
             'name' => 'Admin 1',
-            'email' => 'admin1@example.com',
+            'email' => 'admin1@mail.com',
             'password' => bcrypt('admin123'), // Ganti dengan kata sandi yang Anda inginkan
             'alamat' => 'gunungkidul',
             'role' => 'admin',
