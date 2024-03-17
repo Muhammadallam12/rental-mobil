@@ -3,7 +3,7 @@
 
 <head>
     <title>@yield('title')</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/logo.jpg') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/cars.png') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -28,7 +28,7 @@
     <div class="d-flex flex-wrap align-items-stretch">
         <div class="d-none d-lg-block col-md-4 col-lg-6">
             <div class="position-relative" style="width:100vh; height: 100vh;">
-                <img class="w-100 h-100 object-fit-cover" src="{{asset('assets/img/transaksi.jpg')}}" alt="learning">
+                <img class="w-100 h-100 object-fit-cover" src="{{asset('assets/img/rent.jpg')}}" alt="learning">
             </div>
         </div>
         <div class="col-12 col-lg-6">

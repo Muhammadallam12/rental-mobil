@@ -7,7 +7,7 @@
 @section('content')
     <div style="margin: 100px 130px 50px 130px;">
         <div class="d-flex justify-content-center align-items-center">
-            <img class="" src="{{asset('assets/img/cat-logo.png')}}" alt="Logo" style="width:150px; height:auto;">
+            <img class="" src="{{asset('assets/img/cars.png')}}" alt="Logo" style="width:150px; height:auto;">
         </div>
         <h2 class="font-weight-bold mt-3">Selamat Datang</h2>
         <p class="mt-2">Silahkan login</p>

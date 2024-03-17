@@ -29,9 +29,9 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard-admin">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                 <div class="d-flex flex-row">
-                    Admin MENU
+                    User MENU
                 </div>
             </a>
 
@@ -39,11 +39,6 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item {{ request()->path() == 'dashboard-admin' ? 'active' : '' }}">
-                <a class="nav-link" href="/dashboard-admin">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -55,22 +50,8 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
 
-            {{-- <li class="nav-item {{ request()->path() == 'mobil' ? 'active' : '' }}"> --}}
-                <a class="nav-link" href="/">
-                    <i class="bi bi-table"></i>
-                    <span>User</span>
-                </a>
-            {{-- </li> --}}
-
-            <li class="nav-item {{ request()->path() == 'mobil' ? 'active' : '' }}">
-                <a class="nav-link" href="{{route('mobil.index')}}">
-                    <i class="bi bi-table"></i>
-                    <span>Mobil</span>
-                </a>
-            </li>
-
             <li class="nav-item {{ request()->path() == 'rental' ? 'active' : '' }}">
-                <a class="nav-link" href="/rental">
+                <a class="nav-link" href="/rental-user">
                     <i class="bi bi-table"></i>
                     <span>Rental</span>
                 </a>
